@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu préfères - Fanfare</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      background-color: #007bff;
+      color: white;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .surnom {
+      margin: 1rem 0;
+      padding: 1rem;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+      background-color: #e9ecef;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .surnom:hover {
+      background-color: #007bff;
+      color: white;
+    }
+    .classement {
+      margin-top: 2rem;
+    }
+    .classement h2 {
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tu préfères - Fanfare</h1>
+  </header>
+  <div class="container">
+    <div id="choices">
+      <div id="surnom1" class="surnom">Chargement...</div>
+      <div id="surnom2" class="surnom">Chargement...</div>
+    </div>
+    <div class="classement">
+      <h2>Classement</h2>
+      <table id="classement-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Classement inséré ici -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const apiUrl = 'http://127.0.0.1:5000';
+
+    // Fonction pour charger deux surnoms aléatoires
+    async function loadChoices() {
+      const response = await fetch(`${apiUrl}/get_random`);
+      const data = await response.json();
+      const surnom1 = data.surnom1;
+      const surnom2 = data.surnom2;
+
+      const surnom1Div = document.getElementById('surnom1');
+      const surnom2Div = document.getElementById('surnom2');
+
+      surnom1Div.textContent = surnom1.nom;
+      surnom1Div.dataset.id = surnom1.id;
+
+      surnom2Div.textContent = surnom2.nom;
+      surnom2Div.dataset.id = surnom2.id;
+    }
+
+    // Fonction pour enregistrer un vote
+    async function vote(winnerId, loserId) {
+      await fetch(`${apiUrl}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ winner_id: winnerId, loser_id: loserId }),
+      });
+
+      loadChoices();
+      loadClassement();
+    }
+
+    // Fonction pour charger le classement
+    async function loadClassement() {
+      const response = await fetch(`${apiUrl}/classement`);
+      const classement = await response.json();
+
+      const classementTable = document.getElementById('classement-table').querySelector('tbody');
+      classementTable.innerHTML = '';
+
+      classement.forEach((row) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row.nom}</td><td>${row.resultat}</td>`;
+        classementTable.appendChild(tr);
+      });
+    }
+
+    // Initialiser les événements et charger les données
+    document.getElementById('choices').addEventListener('click', (event) => {
+      if (event.target.classList.contains('surnom')) {
+        const winnerId = event.target.dataset.id;
+        const loserId = event.target.id === 'surnom1'
+          ? document.getElementById('surnom2').dataset.id
+          : document.getElementById('surnom1').dataset.id;
+
+        vote(winnerId, loserId);
+      }
+    });
+
+    loadChoices();
+    loadClassement();
+  </script>
+</body>
+</html>
