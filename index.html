@@ -73,7 +73,7 @@
         <thead>
           <tr>
             <th>Nom</th>
-            <th>Score</th>
+            <th>Elo</th>
           </tr>
         </thead>
         <tbody>
@@ -121,16 +121,14 @@
 
     // Fonction pour charger le classement
     async function loadClassement() {
-      const response = await fetch(`${apiUrl}/classement`);
+      const response = await fetch('/classement');
       const classement = await response.json();
-
-      const classementTable = document.getElementById('classement-table').querySelector('tbody');
-      classementTable.innerHTML = '';
-
-      classement.forEach((row) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${row.nom}</td><td>${row.resultat}</td>`;
-        classementTable.appendChild(tr);
+      const tableBody = document.getElementById('classement');
+      tableBody.innerHTML = '';
+      classement.forEach((entry) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${entry.nom}</td><td>${entry.elo}</td>`;
+        tableBody.appendChild(row);
       });
     }
 
