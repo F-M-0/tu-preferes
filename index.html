@@ -121,7 +121,7 @@
 
     // Fonction pour charger le classement
     async function loadClassement() {
-      const response = await fetch('/classement');
+      const response = await fetch(`${apiUrl}/classement`);
       const classement = await response.json();
       const tableBody = document.getElementById('classement');
       tableBody.innerHTML = '';
