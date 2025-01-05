@@ -73,11 +73,33 @@
     .rank-row.first {
       background: linear-gradient(90deg, gold, orange, yellow, orange, gold);
       background-size: 200% 200%;
-      animation: gradientMove 3s linear infinite;
+      animation: gradientMove 5s linear infinite;
       color: #fff;
       text-shadow: 1px 1px 2px #000;
       font-weight: bold;
       font-size: 1.4em;
+    }
+
+    
+    .rank-row.second {
+      background: linear-gradient(90deg, silver, lightgray, silver);
+      background-size: 200% 200%;
+      animation: gradientMove 7s linear infinite;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    
+    .rank-row.third {
+      background: linear-gradient(90deg, #cd7f32, orange, #cd7f32);
+      background-size: 200% 200%;
+      animation: gradientMove 11s linear infinite;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+      font-weight: bold;
+      font-size: 1.1em;
     }
     
     .rank-row.first td {
@@ -85,13 +107,16 @@
       padding: 10px;
     }
     
-    .rank.second {
-      color: silver;
+    .rank-row.second td {
+      background: none; /* Pour éviter de surcharger le dégradé */
+      padding: 10px;
     }
     
-    .rank.third {
-      color: #cd7f32; /* Bronze */
+    .rank-row.third td {
+      background: none; /* Pour éviter de surcharger le dégradé */
+      padding: 10px;
     }
+    
   </style>
 </head>
 <body>
@@ -167,25 +192,20 @@
       tableBody.innerHTML = '';
       classement.forEach((entry, index) => {
         const row = document.createElement('tr');
+        
         if (index === 0) {
           row.classList.add('rank-row', 'first');
-          row.innerHTML = 
-            `<td>🥇</td>
-            <td>${entry.nom}</td>
-            <td>${entry.elo}</td>`;
         } else if (index === 1) {
-          row.innerHTML = 
-            `<td><span class="rank second">🥈</span></td>
-            <td><span class="rank second">${entry.nom}</span></td>
-            <td><span class="rank second">${entry.elo}</span></td>`;
+          row.classList.add('rank-row', 'second');
         } else if (index === 2) {
-          row.innerHTML = 
-            `<td><span class="rank third">🥉</span></td>
-            <td><span class="rank third">${entry.nom}</span></td>
-            <td><span class="rank third">${entry.elo}</span></td>`;
-        } else {
-          row.innerHTML = `<td>${index + 1}</td><td>${entry.nom}</td><td>${entry.elo}</td>`;
+          row.classList.add('rank-row', 'third');
         }
+        
+        row.innerHTML = 
+          `<td>🥇</td>
+          <td>${entry.nom}</td>
+          <td>${entry.elo}</td>`;
+        
         tableBody.appendChild(row);
       });
     }
