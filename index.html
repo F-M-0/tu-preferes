@@ -155,7 +155,7 @@
         } else if (index === 2) {
           row.innerHTML = `<td><span class="rank third">🥉</span></td><td>${entry.nom}</td><td>${entry.elo}</td>`;
         } else {
-          row.innerHTML = `<td>index + 1</td><td>${entry.nom}</td><td>${entry.elo}</td>`;
+          row.innerHTML = `<td>${index + 1}</td><td>${entry.nom}</td><td>${entry.elo}</td>`;
         }
         tableBody.appendChild(row);
       });
