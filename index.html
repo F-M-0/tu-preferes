@@ -195,16 +195,30 @@
         
         if (index === 0) {
           row.classList.add('rank-row', 'first');
+          row.innerHTML = 
+            `<td>🥇</td>
+            <td>${entry.nom}</td>
+            <td>${entry.elo}</td>`;
         } else if (index === 1) {
           row.classList.add('rank-row', 'second');
+          row.innerHTML = 
+            `<td>🥈</td>
+            <td>${entry.nom}</td>
+            <td>${entry.elo}</td>`;
         } else if (index === 2) {
           row.classList.add('rank-row', 'third');
+          row.innerHTML = 
+            `<td>🥉</td>
+            <td>${entry.nom}</td>
+            <td>${entry.elo}</td>`;
+        } else {
+          row.innerHTML = 
+            `<td>${index + 1}</td>
+            <td>${entry.nom}</td>
+            <td>${entry.elo}</td>`;
         }
         
-        row.innerHTML = 
-          `<td>🥇</td>
-          <td>${entry.nom}</td>
-          <td>${entry.elo}</td>`;
+        
         
         tableBody.appendChild(row);
       });
