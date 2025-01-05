@@ -55,6 +55,24 @@
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
+
+    .rank {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    .rank.first {
+      color: gold;
+      font-size: 1.5em; /* Plus grand pour le premier */
+    }
+    
+    .rank.second {
+      color: silver;
+    }
+    
+    .rank.third {
+      color: #cd7f32; /* Bronze */
+    }
   </style>
 </head>
 <body>
@@ -72,6 +90,7 @@
       <table id="classement-table">
         <thead>
           <tr>
+            <th>Classement</th>
             <th>Nom</th>
             <th>Elo</th>
           </tr>
@@ -80,6 +99,7 @@
           <!-- Classement inséré ici -->
         </tbody>
         <tbody>
+          <td>- &infin;</td>
           <td>Scatopute</td>
           <td>- &infin;</td>
         </tbody>
@@ -126,9 +146,17 @@
       
       const tableBody = document.getElementById('classement-table').querySelector('tbody');
       tableBody.innerHTML = '';
-      classement.forEach((entry) => {
+      classement.forEach((entry, index) => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${entry.nom}</td><td>${entry.elo}</td>`;
+        if (index === 0) {
+          row.innerHTML = `<td><span class="rank first">🥇</span></td><td>${entry.nom}</td><td>${entry.elo}</td>`;
+        } else if (index === 1) {
+          row.innerHTML = `<td><span class="rank second">🥈</span></td><td>${entry.nom}</td><td>${entry.elo}</td>`;
+        } else if (index === 2) {
+          row.innerHTML = `<td><span class="rank third">🥉</span></td><td>${entry.nom}</td><td>${entry.elo}</td>`;
+        } else {
+          row.innerHTML = `<td>index + 1</td><td>${entry.nom}</td><td>${entry.elo}</td>`;
+        }
         tableBody.appendChild(row);
       });
     }
