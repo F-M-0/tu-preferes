@@ -61,9 +61,28 @@
       font-size: 1.2em;
     }
     
-    .rank.first {
-      color: gold;
-      font-size: 1.5em; /* Plus grand pour le premier */
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 200% 50%;
+      }
+    }
+    
+    .rank-row.first {
+      background: linear-gradient(90deg, gold, orange, yellow, orange, gold);
+      background-size: 200% 200%;
+      animation: gradientMove 3s linear infinite;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+      font-weight: bold;
+      font-size: 1.4em;
+    }
+    
+    .rank-row.first td {
+      background: none; /* Pour éviter de surcharger le dégradé */
+      padding: 10px;
     }
     
     .rank.second {
@@ -149,10 +168,11 @@
       classement.forEach((entry, index) => {
         const row = document.createElement('tr');
         if (index === 0) {
+          row.classList.add('rank-row', 'first');
           row.innerHTML = 
-            `<td><span class="rank first">🥇</span></td>
-            <td><span class="rank first">${entry.nom}</span></td>
-            <td><span class="rank first">${entry.elo}</span></td>`;
+            `<td>🥇</td>
+            <td>${entry.nom}</td>
+            <td>${entry.elo}</td>`;
         } else if (index === 1) {
           row.innerHTML = 
             `<td><span class="rank second">🥈</span></td>
