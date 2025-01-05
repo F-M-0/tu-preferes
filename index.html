@@ -149,11 +149,20 @@
       classement.forEach((entry, index) => {
         const row = document.createElement('tr');
         if (index === 0) {
-          row.innerHTML = `<span class="rank first"><td>🥇</td><td>${entry.nom}</td><td>${entry.elo}</td></span>`;
+          row.innerHTML = 
+            `<td><span class="rank first">🥇</span></td>
+            <td><span class="rank first">${entry.nom}</span></td>
+            <td><span class="rank first">${entry.elo}</span></td>`;
         } else if (index === 1) {
-          row.innerHTML = `<span class="rank second"><td>🥈</td><td>${entry.nom}</td><td>${entry.elo}</td></span>`;
+          row.innerHTML = 
+            `<td><span class="rank second">🥈</span></td>
+            <td><span class="rank second">${entry.nom}</span></td>
+            <td><span class="rank second">${entry.elo}</span></td>`;
         } else if (index === 2) {
-          row.innerHTML = `<span class="rank third"><td>🥉</td><td>${entry.nom}</td><td>${entry.elo}</td></span>`;
+          row.innerHTML = 
+            `<td><span class="rank third">🥉</span></td>
+            <td><span class="rank third">${entry.nom}</span></td>
+            <td><span class="rank third">${entry.elo}</span></td>`;
         } else {
           row.innerHTML = `<td>${index + 1}</td><td>${entry.nom}</td><td>${entry.elo}</td>`;
         }
