@@ -158,8 +158,8 @@
     async function loadChoices() {
       const response = await fetch(`${apiUrl}/get_random`);
       const data = await response.json();
-      const  = data(0);
-      const surnom2 = data(1);
+      const  = data[0];
+      const surnom2 = data[1];
 
       const surnom1Div = document.getElementById('surnom1');
       const surnom2Div = document.getElementById('surnom2');
